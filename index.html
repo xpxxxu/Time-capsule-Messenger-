@@ -1,160 +1,270 @@
 <!doctype html>
 
-<html lang="en">
+<html lang="ar">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Time Capsule — Minimal & Elegant</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<title>Time Capsule — Link-only Encrypted</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
 <style>
-  :root{--bg:#0f1724;--card:#0b1220;--accent:#7c3aed;--muted:#9aa4b2;--glass:rgba(255,255,255,0.04)}
+  :root{--bg:#0f1724;--card:#071129;--accent:#7c3aed;--muted:#9aa4b2}
   *{box-sizing:border-box}
-  body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial;background:linear-gradient(180deg,#071129 0%, #0f1724 100%);color:#e6eef8;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:28px}
-  .wrap{width:100%;max-width:920px;display:grid;grid-template-columns:1fr 420px;gap:28px}
-  .panel{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.04);padding:28px;border-radius:16px;backdrop-filter:blur(6px)}
-  h1{margin:0 0 8px;font-size:1.5rem}
-  p.lead{margin:0 0 18px;color:var(--muted)}label{display:block;font-weight:600;margin-top:12px;color:#dbeafe} input[type=text],textarea,input[type=date],input[type=time],input[type=datetime-local],input[type=password]{width:100%;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit;margin-top:8px} textarea{min-height:120px;resize:vertical} .row{display:flex;gap:8px;margin-top:12px} .btn{padding:10px 14px;border-radius:10px;border:none;cursor:pointer;font-weight:700} .btn.primary{background:linear-gradient(90deg,var(--accent),#4f46e5);color:white} .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted)} .small{font-size:0.86rem;color:var(--muted);margin-top:10px}
-
-/* preview card */ .preview{display:flex;flex-direction:column;gap:12px;align-items:stretch} .capsule{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.03);padding:18px;border-radius:12px} .meta{display:flex;justify-content:space-between;align-items:center} .meta .unlock{font-size:0.95rem;font-weight:700;color:#dbeafe} .countdown{font-size:0.9rem;color:var(--muted)} .linkBox{display:flex;gap:8px;margin-top:12px} .link{flex:1;padding:10px;border-radius:8px;background:var(--glass);border:1px solid rgba(255,255,255,0.03);color:#cfe7ff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-
-footer{grid-column:1/-1;text-align:center;margin-top:18px;color:var(--muted);font-size:0.9rem}
-
-@media(max-width:880px){.wrap{grid-template-columns:1fr;}.link{font-size:0.9rem}} </style>
-
+  body{margin:0;font-family:Inter,system-ui,Arial;background:linear-gradient(180deg,#071129,#0f1724);color:#e6eef8;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+  .card{width:100%;max-width:920px;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));padding:22px;border-radius:14px;border:1px solid rgba(255,255,255,0.03);display:grid;grid-template-columns:1fr 380px;gap:20px}
+  h1{margin:0 0 8px;font-size:1.4rem;text-align:left}
+  label{display:block;margin-top:12px;font-weight:600;color:#cfe7ff}
+  textarea,input{width:100%;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit;margin-top:8px}
+  .row{display:flex;gap:8px;margin-top:12px}
+  .btn{padding:10px 12px;border-radius:10px;border:none;cursor:pointer;font-weight:700}
+  .primary{background:linear-gradient(90deg,var(--accent),#4f46e5);color:white}
+  .ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted)}
+  .meta{font-size:0.9rem;color:var(--muted);margin-top:10px}
+  .preview{background:rgba(255,255,255,0.02);padding:14px;border-radius:10px}
+  .link{flex:1;padding:10px;border-radius:8px;background:rgba(255,255,255,0.02);overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+  footer{grid-column:1/-1;text-align:center;margin-top:12px;color:var(--muted)}
+  @media(max-width:880px){.card{grid-template-columns:1fr;}}
+</style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="panel">
-      <h1>Time Capsule</h1>
-      <p class="lead">Write a private message, pick a future date and create a secure capsule. Share the link — it only opens on the unlock date.</p><label>Message</label>
-  <textarea id="message" placeholder="Write your message... (supports plain text, emojis)"></textarea>
+  <div class="card">
+    <div>
+      <h1>Time Capsule — Encrypted Link</h1>
+      <p class="meta">Everything is encrypted locally. The full encrypted payload is stored inside the link (URL fragment). No server, no external storage.</p><label>Message</label>
+  <textarea id="msg" rows="6" placeholder="اكتب رسالتك هنا... (Arabic & English supported)"></textarea>
 
   <div style="display:flex;gap:12px;margin-top:12px">
     <div style="flex:1">
       <label>Unlock date</label>
       <input id="date" type="date" />
     </div>
-    <div style="width:160px">
+    <div style="width:140px">
       <label>Unlock time (optional)</label>
       <input id="time" type="time" />
     </div>
   </div>
 
-  <label>Optional password (leave empty to generate)</label>
-  <input id="password" type="text" placeholder="Password for extra security (optional)" />
-
-  <div class="row">
-    <button id="createBtn" class="btn primary">Create Capsule</button>
-    <button id="previewBtn" class="btn ghost">Preview</button>
-  </div>
-  <div class="small">Note: This demo stores capsules in your browser's <strong>localStorage</strong>. For sharing online, you can host with a server or use Firebase/Supabase.</div>
-</div>
-
-<div class="panel preview">
-  <div class="capsule">
-    <div class="meta"><div class="unlock">Preview Capsule</div><div class="countdown" id="countdown">Not created yet</div></div>
-    <div id="previewMsg" style="margin-top:12px;color:#cfe7ff;min-height:52px">Your message preview will appear here after preview.</div>
-    <div class="linkBox" id="linkBox" style="display:none">
-      <div class="link" id="linkText">-</div>
-      <button id="copyBtn" class="btn ghost">Copy</button>
+  <div style="display:flex;align-items:center;gap:10px;margin-top:12px">
+    <button id="togglePwd" class="btn ghost">🔒 Add password</button>
+    <div id="pwdBox" style="flex:1;display:none">
+      <label>Password (optional)</label>
+      <input id="password" type="text" placeholder="Leave empty to embed key in link" />
     </div>
   </div>
+
+  <div class="row">
+    <button id="create" class="btn primary">Create Encrypted Link</button>
+    <button id="preview" class="btn ghost">Preview</button>
+  </div>
+
+  <div class="meta">If you leave password empty: the decryption key will be embedded in the link fragment (after #). Share the full link to allow the recipient to open it. If you set a password: share the link and password separately.</div>
 </div>
 
-<footer>Made with care — Time Capsule Demo</footer>
+<div>
+  <div class="preview">
+    <div style="display:flex;justify-content:space-between;align-items:center"><strong>Preview</strong><span id="countdown" style="color:var(--muted)">No capsule</span></div>
+    <div id="previewMsg" style="margin-top:12px;color:#cfe7ff;min-height:80px">Message preview will appear here</div>
+
+    <div style="display:flex;gap:8px;margin-top:12px">
+      <div class="link" id="linkText">-</div>
+      <button id="copyLink" class="btn ghost">Copy</button>
+    </div>
+
+    <div id="status" style="margin-top:10px;color:var(--muted)"></div>
+  </div>
+</div>
+
+<footer>Local encryption • No server • Share link carefully</footer>
 
   </div><script>
-  // simple base64 encode/decode for demo (not secret-grade). For real security use crypto.subtle
-  const enc = s => btoa(unescape(encodeURIComponent(s)));
-  const dec = s => decodeURIComponent(escape(atob(s)));
+// Utilities: base64url (URL safe)
+function toBase64Url(buf){
+  const b64 = arrayBufferToBase64(buf);
+  return b64.replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+}
+function fromBase64Url(b64url){
+  let b64 = b64url.replace(/-/g,'+').replace(/_/g,'/');
+  while(b64.length % 4) b64 += '=';
+  return base64ToArrayBuffer(b64);
+}
 
-  function genId(){return Date.now().toString(36) + Math.random().toString(36).slice(2,9)}
-  function genPassword(len=16){const chars='ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789!@#$%^&*()';let o='';const a=new Uint32Array(len);crypto.getRandomValues(a);for(let i=0;i<len;i++)o+=chars[a[i]%chars.length];return o}
+function arrayBufferToBase64(buf){
+  const bytes = new Uint8Array(buf);
+  let binary = '';
+  for(let b of bytes) binary += String.fromCharCode(b);
+  return btoa(binary);
+}
+function base64ToArrayBuffer(b64){
+  const binary = atob(b64);
+  const len = binary.length;
+  const bytes = new Uint8Array(len);
+  for(let i=0;i<len;i++) bytes[i]=binary.charCodeAt(i);
+  return bytes.buffer;
+}
 
-  const createBtn = document.getElementById('createBtn');
-  const previewBtn = document.getElementById('previewBtn');
-  const copyBtn = document.getElementById('copyBtn');
+const enc = new TextEncoder();
+const dec = new TextDecoder();
 
-  createBtn.addEventListener('click', ()=>{
-    const msg = document.getElementById('message').value.trim();
-    const date = document.getElementById('date').value;
-    const time = document.getElementById('time').value;
-    if(!msg || !date){return alert('Please enter message and unlock date.')}
-    const pwdInput = document.getElementById('password').value.trim();
-    const password = pwdInput || genPassword(18);
+async function deriveKeyFromPassword(password, salt, iterations=200000){
+  const baseKey = await crypto.subtle.importKey('raw', enc.encode(password), 'PBKDF2', false, ['deriveKey']);
+  return crypto.subtle.deriveKey({name:'PBKDF2', salt, iterations, hash:'SHA-256'}, baseKey, {name:'AES-GCM', length:256}, false, ['encrypt','decrypt']);
+}
+
+async function genRandomKey(){
+  return crypto.subtle.generateKey({name:'AES-GCM', length:256}, true, ['encrypt','decrypt']);
+}
+async function exportRawKey(key){
+  const raw = await crypto.subtle.exportKey('raw', key);
+  return toBase64Url(raw);
+}
+async function importRawKey(b64url){
+  const raw = fromBase64Url(b64url);
+  return crypto.subtle.importKey('raw', raw, 'AES-GCM', true, ['encrypt','decrypt']);
+}
+
+async function encryptMessage(plain, key){
+  const iv = crypto.getRandomValues(new Uint8Array(12));
+  const cipher = await crypto.subtle.encrypt({name:'AES-GCM', iv}, key, enc.encode(plain));
+  return {cipherB64: toBase64Url(cipher), ivB64: toBase64Url(iv.buffer)};
+}
+async function decryptMessage(cipherB64, ivB64, key){
+  const cipherBuf = fromBase64Url(cipherB64);
+  const iv = new Uint8Array(fromBase64Url(ivB64));
+  const plainBuf = await crypto.subtle.decrypt({name:'AES-GCM', iv}, key, cipherBuf);
+  return dec.decode(plainBuf);
+}
+
+function genId(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,8); }
+
+// UI
+const msgEl = document.getElementById('msg');
+const dateEl = document.getElementById('date');
+const timeEl = document.getElementById('time');
+const togglePwd = document.getElementById('togglePwd');
+const pwdBox = document.getElementById('pwdBox');
+const pwdInput = document.getElementById('password');
+const createBtn = document.getElementById('create');
+const previewBtn = document.getElementById('preview');
+const previewMsg = document.getElementById('previewMsg');
+const countdown = document.getElementById('countdown');
+const linkText = document.getElementById('linkText');
+const copyLink = document.getElementById('copyLink');
+const status = document.getElementById('status');
+
+togglePwd.addEventListener('click', ()=>{
+  const showing = pwdBox.style.display !== 'none';
+  pwdBox.style.display = showing ? 'none' : 'block';
+  togglePwd.textContent = showing ? '🔒 Add password' : '🔓 Remove password';
+});
+
+previewBtn.addEventListener('click', ()=>{
+  const m = msgEl.value.trim();
+  const d = dateEl.value;
+  if(!m || !d) return alert('Please add message and unlock date');
+  previewMsg.innerHTML = escapeHtml(m);
+  updateCountdown(d, timeEl.value);
+});
+
+createBtn.addEventListener('click', async ()=>{
+  const m = msgEl.value.trim();
+  const d = dateEl.value;
+  const t = timeEl.value;
+  if(!m || !d) return alert('Please add message and unlock date');
+  createBtn.disabled = true; status.textContent = 'Preparing...';
+  try{
+    const unlockAt = t ? new Date(d + 'T' + t).toISOString() : new Date(d + 'T00:00').toISOString();
     const id = genId();
-    // store encrypted payload (simple base64 here)
-    const payload = {msg:enc(msg), date, time, password};
-    localStorage.setItem('capsule_'+id, JSON.stringify(payload));
-    const url = location.origin + location.pathname + '?id='+id;
-    showLink(url);
-    alert('Capsule created! Share the link and the password separately if you used one.');
-  });
+    const createdAt = new Date().toISOString();
 
-  previewBtn.addEventListener('click', ()=>{
-    const msg = document.getElementById('message').value.trim();
-    const date = document.getElementById('date').value;
-    const time = document.getElementById('time').value;
-    if(!msg || !date){return alert('Please enter message and unlock date for preview.')}
-    document.getElementById('previewMsg').textContent = msg;
-    updateCountdown(date, time);
-  });
+    let keyForLink = null;
+    let saltB64 = null;
+    let aesKey;
 
-  copyBtn.addEventListener('click', ()=>{
-    const txt = document.getElementById('linkText').textContent;
-    navigator.clipboard.writeText(txt).then(()=>{copyBtn.textContent='Copied!';setTimeout(()=>copyBtn.textContent='Copy',1200)});
-  });
-
-  function showLink(url){
-    const box = document.getElementById('linkBox');
-    document.getElementById('linkText').textContent = url;
-    box.style.display = 'flex';
-    updateCountdownFromUrl(url);
-  }
-
-  function updateCountdown(date, time){
-    const now = new Date();
-    const dt = (time? new Date(date+'T'+time) : new Date(date+'T00:00'));
-    const diff = dt - now;
-    const el = document.getElementById('countdown');
-    if(diff<=0){el.textContent='Unlocked';return}
-    const days = Math.floor(diff/(1000*60*60*24));
-    const hrs = Math.floor((diff%(1000*60*60*24))/(1000*60*60));
-    const mins = Math.floor((diff%(1000*60*60))/(1000*60));
-    el.textContent = `${days}d ${hrs}h ${mins}m to unlock`;
-  }
-
-  // if page loaded with ?id=... show capsule viewer
-  window.onload = ()=>{
-    const params = new URLSearchParams(location.search);
-    const id = params.get('id');
-    if(id){
-      const data = localStorage.getItem('capsule_'+id);
-      if(!data){document.body.innerHTML='<div style="padding:40px;color:#ffdede;background:#2b0b0b;border-radius:12px;margin:40px">Capsule not found.</div>';return}
-      const obj = JSON.parse(data);
-      const now = new Date();
-      const unlock = obj.time? new Date(obj.date+'T'+obj.time) : new Date(obj.date+'T00:00');
-      if(now < unlock){
-        document.body.innerHTML = `<div style="max-width:680px;margin:40px auto;padding:24px;background:#071129;border-radius:12px;color:#cfe7ff">\n          <h2 style=\"margin-top:0\">⏳ Capsule locked</h2>\n          <p>This capsule will unlock on <strong>${obj.date}${obj.time? ' at '+obj.time : ''}</strong>.</p>\n          <p style=\"color:#9aa4b2\">Come back later or use the original creator to preview.</p>\n        </div>`;
-        return;
-      }
-      // unlocked — ask for password if set
-      if(obj.password){
-        const userPwd = prompt('Enter password to open this capsule:');
-        if(userPwd !== obj.password){alert('Incorrect password.'); location.href = location.origin + location.pathname; return}
-      }
-      const message = dec(obj.msg);
-      document.body.innerHTML = `<div style=\"max-width:820px;margin:40px auto;padding:28px;background:linear-gradient(180deg,#071129,#0b1220);border-radius:12px;color:#e6eef8\">\n        <h1 style=\"margin:0 0 8px\">📜 Your Time Capsule</h1>\n        <div style=\"background:rgba(255,255,255,0.02);padding:18px;border-radius:10px;border:1px solid rgba(255,255,255,0.03)\">${escapeHtml(message)}</div>\n      </div>`;
+    if(pwdBox.style.display !== 'none' && pwdInput.value.trim() !== ''){
+      // password mode: derive key from password, store salt in payload
+      const salt = crypto.getRandomValues(new Uint8Array(16));
+      saltB64 = toBase64Url(salt.buffer);
+      aesKey = await deriveKeyFromPassword(pwdInput.value.trim(), salt, 200000);
+    } else {
+      // link-key mode: generate key and export it to include in fragment
+      aesKey = await genRandomKey();
+      keyForLink = await exportRawKey(aesKey);
     }
-  }
 
-  function updateCountdownFromUrl(url){
-    // show approximate countdown using inputs
-    const d = document.getElementById('date').value;
-    const t = document.getElementById('time').value;
-    if(d) updateCountdown(d,t);
-  }
+    const {cipherB64, ivB64} = await encryptMessage(m, aesKey);
 
-  function escapeHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br/>')}
+    // build payload object and encode as base64url JSON
+    const payload = {id, cipher: cipherB64, iv: ivB64, salt: saltB64, unlockAt, createdAt};
+    const json = JSON.stringify(payload);
+    const payloadB64 = toBase64Url(new TextEncoder().encode(json));
+
+    // create link with fragment (fragment won't be sent to server)
+    let url = location.origin + location.pathname + '#capsule=' + payloadB64;
+    if(keyForLink) url += '&key=' + encodeURIComponent(keyForLink);
+
+    linkText.textContent = url; linkText.title = url; document.getElementById('status').textContent = 'Ready';
+
+    // show countdown
+    updateCountdown(d, t);
+
+    alert('Encrypted link created. Copy and share the full link. If you used a password, share the password separately.');
+  }catch(e){
+    console.error(e); alert('Error: ' + e.message);
+  } finally{ createBtn.disabled = false; }
+});
+
+copyLink.addEventListener('click', ()=>{
+  navigator.clipboard.writeText(linkText.textContent).then(()=>{ copyLink.textContent = 'Copied'; setTimeout(()=>copyLink.textContent='Copy', 1200); });
+});
+
+function updateCountdown(d, t){
+  const now = new Date();
+  const unlock = t ? new Date(d + 'T' + t) : new Date(d + 'T00:00');
+  const diff = unlock - now;
+  if(diff <= 0){ countdown.textContent = 'Unlocked'; return; }
+  const days = Math.floor(diff/(1000*60*60*24));
+  const hrs = Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+  const mins = Math.floor((diff%(1000*60*60))/(1000*60));
+  countdown.textContent = `${days}d ${hrs}h ${mins}m to unlock`;
+}
+
+function escapeHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br/>');}
+
+/* ===== On load: if fragment contains capsule=..., try to open ===== */
+(async function tryOpen(){
+  const frag = location.hash || '';
+  if(!frag.includes('capsule=')) return;
+  // parse fragment like #capsule=PAYLOAD&key=KEY
+  const parts = frag.substring(1).split('&').reduce((acc,cur)=>{const [k,v]=cur.split('='); acc[k]=v; return acc;},{ });
+  if(!parts.capsule){ alert('Invalid capsule link'); return; }
+  try{
+    const payloadBuf = fromBase64Url(parts.capsule);
+    const json = new TextDecoder().decode(payloadBuf);
+    const obj = JSON.parse(json);
+    const unlock = new Date(obj.unlockAt);
+    const now = new Date();
+    if(now < unlock){
+      document.body.innerHTML = `<div style="max-width:680px;margin:40px auto;padding:24px;background:#071129;border-radius:12px;color:#cfe7ff">\n        <h2 style=\"margin-top:0\">⏳ Capsule locked</h2>\n        <p>This capsule will unlock on <strong>${unlock.toLocaleString()}</strong>.</p>\n        <p style=\"color:#9aa4b2\">Open this exact link again after unlock time.</p>\n      </div>`;
+      return;
+    }
+
+    // Decide mode
+    let aesKey;
+    if(obj.salt){
+      // password mode
+      const pwd = prompt('Enter password to open this capsule:');
+      if(!pwd){ alert('Password required'); return; }
+      const saltBuf = fromBase64Url(obj.salt);
+      aesKey = await deriveKeyFromPassword(pwd, new Uint8Array(saltBuf), 200000);
+    } else {
+      // key-in-fragment mode: require key param
+      if(!parts.key){ alert('Missing decryption key in the link fragment. Open the full link provided by sender.'); return; }
+      const keyB64url = decodeURIComponent(parts.key);
+      aesKey = await importRawKey(keyB64url);
+    }
+
+    const message = await decryptMessage(obj.cipher, obj.iv, aesKey);
+    document.body.innerHTML = `<div style=\"max-width:820px;margin:40px auto;padding:28px;background:linear-gradient(180deg,#071129,#0b1220);border-radius:12px;color:#e6eef8\">\n      <h1 style=\"margin:0 0 8px\">📜 Your Time Capsule</h1>\n      <div style=\"background:rgba(255,255,255,0.02);padding:18px;border-radius:10px;border:1px solid rgba(255,255,255,0.03)\">${escapeHtml(message)}</div>\n    </div>`;
+  }catch(e){ console.error(e); alert('Failed to open capsule: ' + e.message); }
+})();
 </script></body>
-                                                                                             </html>
+</html>
